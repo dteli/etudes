@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css?family=Merriweather:400,700i" rel="stylesheet">
 <head>
 
   <style>
 
+    html {
+      font-size: 62.5%;
+    }
+    
     body {
-    margin: 0;
+      margin: 0;
     }
     
     svg {
@@ -19,17 +24,32 @@
     }
 
     .lett {
-      width: 3.846154vw;
+      width: 3.84615385vw;
       fill: red;
       stroke: none;
     }
+
+    .lettlbl {
+    //height: 5vh;
+    //width: 3.84615385vw;
+
+    text-anchor: middle;
+    alignment-baseline: middle;
+
+    font-family: 'Merriweather', serif;
+    font-size: 2rem;
+    font-style: italic;
+
+    fill: rgba(255,255,255,.8);
+    }
+    
     
 
     textarea {
       height: 40vh;
       width: 60vw;
-      background-color: rgba(0,0,0,0.05);
-      font-size: 200%;
+      background-color: rgba(245,245,245,0.9);
+      font-size: 3rem;
       position: fixed;
       left: 0;
       right: 0;
@@ -37,7 +57,7 @@
       z-index: 2;
       resize: none;
       border: none;
-      margin: 10vh auto;
+      margin: 20vh auto 10vh;
       padding: 0;
     }
 
@@ -77,12 +97,20 @@
   var svg = d3.select("#lbarsvg");
   var barW = 100 / 26;
   // var barHinit = String(100 - (100 / 26))
-  for (i in alpharray) { 
-    svg.append("rect")
+  for (i in alpharray) {
+    var g = svg.append("g") 
+  
+    var gbar = g.append("rect")
        .attr("class", "lett")
        .attr("x", String(i*barW)+"vw")
-       .attr("y", "96.1538462vh")
-       .attr("height", "3.84615385vh");
+       .attr("y", "90vh")
+       .attr("height", "10vh");
+    g.append("text")
+       .attr("class", "lettlbl")
+       .attr("x", String(i*barW + 1.92307692)+"vw")
+       .attr("y", "96vh")                                           // gbar.attr("y") - )
+       .text(alpharray[i]);
+
   };
 
   
@@ -98,13 +126,25 @@
     };
 
 
-    var lbs = svg.selectAll(".lett")
-                 .data(lettfreqs);
+    var maxfreq = Math.max(...lettfreqs);
+    // set highest bar at 70vh
+    lettfreqsScaled = lettfreqs.map(f => (f / maxfreq) * 0.7);
 
-    lbs.attr("y", function (d,i) {return String(100 - (d * 100))+"vh";})
-       .attr("height", function (d,i) {return String(d * 100)+"vh";});
   
 
+  
+    var gs = svg.selectAll("g")
+                 // .data(lettfreqs);
+                 .data(lettfreqsScaled);
+
+    var lbars = gs.select("rect");
+    lbars.attr("y", function (d,i) {return String(100 - (d * 100))+"vh";})
+         .attr("height", function (d,i) {return String(d * 100)+"vh";});
+
+    var lbls = gs.select("text");
+    lbls.attr("y", function (d,i) {return d<0.07 ? String(100 - (d*100) - 2)+"vh" : "96vh";});
+    lbls.style("fill", function (d,i) {return d<0.07 ? "rgb(20,20,20)" : "rgba(255,255,255,.8)";});
+  
   };
   
 
