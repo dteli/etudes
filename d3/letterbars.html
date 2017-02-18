@@ -23,24 +23,33 @@
     
     }
 
+    .stop0 {
+      stop-color: rgb(255,80,70);
+    }
+
+    .stop1 {
+      stop-color: rgb(255,10,10);
+    }
+    
+    
     .lett {
       width: 3.84615385vw;
-      fill: red;
+      fill: url(#bargradient);
       stroke: none;
     }
 
     .lettlbl {
-    //height: 5vh;
-    //width: 3.84615385vw;
+      //height: 5vh;
+      //width: 3.84615385vw;
 
-    text-anchor: middle;
-    alignment-baseline: middle;
+      text-anchor: middle;
+      alignment-baseline: middle;
 
-    font-family: 'Merriweather', serif;
-    font-size: 2rem;
-    font-style: italic;
+      font-family: 'Merriweather', serif;
+      font-size: 2rem;
+      font-style: italic;
 
-    fill: rgba(255,255,255,.8);
+      fill: rgba(255,255,255,.8);
     }
     
     
@@ -99,7 +108,7 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
 
 <script>
-
+  
 
 
   function getBinaryH(dist) {
@@ -119,6 +128,16 @@
 
 
   var svg = d3.select("#lbarsvg");
+  var svgdefs = svg.append("defs");
+
+  var bargradient = svgdefs.append("linearGradient")
+  .attr("id", "bargradient")
+  .attr("x1","0%").attr("x2","0%").attr("y1","100%").attr("y2","0%");
+  bargradient.append("stop").attr("class", "stop0").attr("offset","0");
+  bargradient.append("stop").attr("class", "stop1").attr("offset","1");
+
+  
+
   var barW = 100 / 26;
   // var barHinit = String(100 - (100 / 26))
   for (i in alpharray) {
@@ -144,9 +163,12 @@
     var letters = newtxt.replace(/[^A-Za-z]/g, "");
     var lettlen = letters.length;
 
+    var growbars = [];  // rhymes with "crowbars"
 
     for (i in alpharray) {
-      lettfreqs[i] = (letters.match(lettexps[i]) || []).length / lettlen;
+      var newfreq = (letters.match(lettexps[i]) || []).length / lettlen;
+      if (newfreq > lettfreqs[i]) {growbars.push(Number(i));};
+      lettfreqs[i] = newfreq;
     };
 
 
@@ -155,19 +177,27 @@
     lettfreqsScaled = lettfreqs.map(f => (f / maxfreq) * 0.7);
 
   
-
+    var t = d3.transition()
+              .duration(500)
+              .ease(d3.easeExpOut);
   
     var gs = svg.selectAll("g")
                  // .data(lettfreqs);
                  .data(lettfreqsScaled);
 
     var lbars = gs.select("rect");
-    lbars.attr("y", function (d,i) {return String(100 - (d * 100))+"vh";})
+    lbars.transition(t)
+         .attr("y", function (d,i) {return String(100 - (d * 100))+"vh";})
          .attr("height", function (d,i) {return String(d * 100)+"vh";});
 
+
+  
+  
+  
     var lbls = gs.select("text");
-    lbls.attr("y", function (d,i) {return d<0.07 ? String(100 - (d*100) - 2)+"vh" : "96vh";});
-    lbls.style("fill", function (d,i) {return d<0.07 ? "rgb(20,20,20)" : "rgba(255,255,255,.8)";});
+    lbls.transition(t)
+        .attr("y", function (d,i) {return d<0.07 ? String(100 - (d*100) - 2)+"vh" : "96vh";})
+        .style("fill", function (d,i) {return d<0.07 ? "rgb(20,20,20)" : "rgba(255,255,255,.8)";});
 
 
     
@@ -189,3 +219,5 @@
 
 <!--Thanks goes to voices at:-->
 <!-- http://stackoverflow.com/questions/881085/count-the-number-of-occurences-of-a-character-in-a-string-in-javascript -->
+<!-- http://stackoverflow.com/questions/494035/how-do-you-use-a-variable-in-a-regular-expression -->
+<!--http://stackoverflow.com/questions/2686855/is-there-a-javascript-function-that-can-pad-a-string-to-get-to-a-determined-leng-->
