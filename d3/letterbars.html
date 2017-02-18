@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+
+  <style>
+
+    body {
+    margin: 0;
+    }
+    
+    svg {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      position: fixed;
+      z-index: 0;
+    
+    }
+
+    .lett {
+      width: 3.846154vw;
+      fill: red;
+      stroke: none;
+    }
+    
+
+    textarea {
+      height: 40vh;
+      width: 60vw;
+      background-color: rgba(0,0,0,0.05);
+      font-size: 200%;
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      z-index: 2;
+      resize: none;
+      border: none;
+      margin: 10vh auto;
+      padding: 0;
+    }
+
+    
+  </style>
+
+
+
+</head>
+<body>
+
+
+
+<textarea id="txtbx" placeholder="letters go in the box" oninput="update();"></textarea>
+
+
+<svg id="lbarsvg">
+
+
+</svg>
+
+  
+<!-- <script src="./letters1.js"></script> -->
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+<script>
+
+  
+
+  var alphabet = "abcdefghijklmnopqrstuvwxyz";
+  var alpharray = alphabet.split("");
+  
+  var lettexps = alpharray.map(function (x) {return new RegExp(x, "gi");});
+  var lettfreqs = alpharray.map(function () {return 1/26;});
+
+
+  var svg = d3.select("#lbarsvg");
+  var barW = 100 / 26;
+  // var barHinit = String(100 - (100 / 26))
+  for (i in alpharray) { 
+    svg.append("rect")
+       .attr("class", "lett")
+       .attr("x", String(i*barW)+"vw")
+       .attr("y", "96.1538462vh")
+       .attr("height", "3.84615385vh");
+  };
+
+  
+  
+  function update() {
+    var newtxt = document.getElementById("txtbx").value;
+    var letters = newtxt.replace(/[^A-Za-z]/g, "");
+    var lettlen = letters.length;
+
+
+    for (i in alpharray) {
+      lettfreqs[i] = (letters.match(lettexps[i]) || []).length / lettlen;
+    };
+
+
+    var lbs = svg.selectAll(".lett")
+                 .data(lettfreqs);
+
+    lbs.attr("y", function (d,i) {return String(100 - (d * 100))+"vh";})
+       .attr("height", function (d,i) {return String(d * 100)+"vh";});
+  
+
+  };
+  
+
+  
+</script>
+
+
+
+
+</body>
+
+
+
+
+<!--Thanks goes to voices at:-->
+<!-- http://stackoverflow.com/questions/881085/count-the-number-of-occurences-of-a-character-in-a-string-in-javascript -->
