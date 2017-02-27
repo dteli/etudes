@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css?family=Inconsolata|Merriweather:400,700i" rel="stylesheet">
+<head>
+
+  <style>
+
+    html {
+      font-size: 62.5%;
+    }
+    
+    body {
+      margin: 0;
+    }
+    
+    svg {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      position: fixed;
+      z-index: 0;
+    
+    }
+
+    #hgrect { fill: url(#huegrad); }
+    
+    #hgstop0 { stop-color: #000000; }
+    #hgstop1 { stop-color: #000000; }
+    #hgstop2 { stop-color: #000000; }
+    #hgstop3 { stop-color: #000000; }
+    #hgstop4 { stop-color: #000000; }
+
+
+
+    
+
+    textarea {
+      height: 40vh;
+      width: 60vw;
+      background-color: rgba(245,245,245,0.9);
+      font-size: 3rem;
+      font-family: 'Merriweather', serif;
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      z-index: 2;
+      resize: none;
+      border: none;
+      margin: 20vh auto 10vh;
+      padding: 0;
+    }
+
+
+    #statsbox {
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      margin: 1rem auto;
+      padding: 0;
+      z-index: 3;
+      
+      text-align: center;
+      font-size: 1.6rem;
+      font-family: 'Inconsolata', monospace;
+      color: rgba(9,9,9,0.9);
+    
+    
+    }
+
+    
+  </style>
+
+  <script data-main="huesha.js" src="require.js"></script>
+  
+</head>
+<body>
+
+  <!-- <div id="statsbox">lettercount <span id="lettercount">0</span>&emsp;H(<em>X</em>)=<span id="binaryH">0</span></div> -->
+
+  <textarea id="txtbx" placeholder=".." ></textarea>
+
+
+  <svg id="huesvg">
+    <defs>
+      <linearGradient id="huegrad" x1="0%" x2="100%" y1="0%" y2="0%">
+        <stop id="hgstop0" offset="0%" />
+        <stop id="hgstop1" offset="0%" />
+        <stop id="hgstop2" offset="0%" />
+        <stop id="hgstop3" offset="0%" />
+        <stop id="hgstop4" offset="0%" />
+      </linearGradient>
+    </defs>
+
+    <rect id="hgrect" x="0" y="0" height="100%" width="100%" />
+    
+  </svg>
+
+
+
+
+
+
+</body>
+
+
+
+
+<!--Thanks goes to voices at:-->
+<!-- http://stackoverflow.com/questions/6259515/javascript-elegant-way-to-split-string-into-segments-n-characters-long -->
+<!-- http://stackoverflow.com/questions/1981760/parse-hex-ascii-into-numbers -->
+<!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort -->
