@@ -54,11 +54,11 @@ require(['d3.min','sha1.min'], function (d3, sha1) {
 
       //// UNTIL THIS IS DONE IN D3:
 
-      document.getElementById("hgstop0").style.setProperty("stop-color",newcolors[0]);
-      document.getElementById("hgstop1").style.setProperty("stop-color",newcolors[1]);
-      document.getElementById("hgstop2").style.setProperty("stop-color",newcolors[2]);
-      document.getElementById("hgstop3").style.setProperty("stop-color",newcolors[3]);
-      document.getElementById("hgstop4").style.setProperty("stop-color",newcolors[4]);
+      // document.getElementById("hgstop0").style.setProperty("stop-color",newcolors[0]);
+      // document.getElementById("hgstop1").style.setProperty("stop-color",newcolors[1]);
+      // document.getElementById("hgstop2").style.setProperty("stop-color",newcolors[2]);
+      // document.getElementById("hgstop3").style.setProperty("stop-color",newcolors[3]);
+      // document.getElementById("hgstop4").style.setProperty("stop-color",newcolors[4]);
       
       // document.getElementById("hgstop0").setAttribute("offset",newstops[0]);
       // document.getElementById("hgstop1").setAttribute("offset",newstops[1]);
@@ -68,13 +68,16 @@ require(['d3.min','sha1.min'], function (d3, sha1) {
       
 
     let t = d3.transition()
-        .duration(400)
+        .duration(2000)
         .ease(d3.easeExpOut);
-
+    
     let stops = svg.selectAll("stop").data(newstops);
-
     stops.transition(t)
-      .attr("offset", function (d, i) {return d;});
+      .attr("offset", function (d, i) {return d;})
+
+    let colors = svg.selectAll("stop").data(newcolors)
+    colors.transition(t)
+      .style("stop-color", function (d) {return d;});
       
 
   };
