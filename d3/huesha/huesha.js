@@ -60,15 +60,26 @@ require(['d3.min','sha1.min'], function (d3, sha1) {
       document.getElementById("hgstop3").style.setProperty("stop-color",newcolors[3]);
       document.getElementById("hgstop4").style.setProperty("stop-color",newcolors[4]);
       
-      document.getElementById("hgstop0").setAttribute("offset",newstops[0]);
-      document.getElementById("hgstop1").setAttribute("offset",newstops[1]);
-      document.getElementById("hgstop2").setAttribute("offset",newstops[2]);
-      document.getElementById("hgstop3").setAttribute("offset",newstops[3]);
-      document.getElementById("hgstop4").setAttribute("offset",newstops[4]);
+      // document.getElementById("hgstop0").setAttribute("offset",newstops[0]);
+      // document.getElementById("hgstop1").setAttribute("offset",newstops[1]);
+      // document.getElementById("hgstop2").setAttribute("offset",newstops[2]);
+      // document.getElementById("hgstop3").setAttribute("offset",newstops[3]);
+      // document.getElementById("hgstop4").setAttribute("offset",newstops[4]);
       
 
+    let t = d3.transition()
+        .duration(250)
+        .ease(d3.easeExpOut);
+
+    let stops = svg.selectAll("stop").data(newstops);
+
+    stops.transition(t)
+      .attr("offset", function (d, i) {return d;});
+      
 
   };
+
+  
 
     txtbx.addEventListener("input", update);
     
