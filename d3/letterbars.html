@@ -164,6 +164,7 @@
     var lettlen = letters.length;
 
     var growbars = [];  // rhymes with "crowbars"
+    let nobars; // lol, we don't use this
 
     for (i in alpharray) {
       var newfreq = (letters.match(lettexps[i]) || []).length / lettlen;
