@@ -68,7 +68,7 @@ require(['d3.min','sha1.min'], function (d3, sha1) {
       
 
     let t = d3.transition()
-        .duration(250)
+        .duration(400)
         .ease(d3.easeExpOut);
 
     let stops = svg.selectAll("stop").data(newstops);
