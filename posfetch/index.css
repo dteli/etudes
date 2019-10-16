@@ -1,0 +1,75 @@
+@import url("https://fonts.googleapis.com/css?family=Merriweather&display=swap");
+body {
+  margin: 0;
+}
+
+textarea {
+  height: 30vh;
+  width: 60vw;
+  background-color: rgba(245, 245, 245, 0.9);
+  font-size: 3rem;
+  font-family: "Merriweather", serif;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  resize: none;
+  border: none;
+  margin: 10vh auto 10vh;
+  padding: 0;
+}
+
+div#mainbox {
+  height: 55vh;
+  width: 100vw;
+  position: fixed;
+  bottom: 0;
+}
+div#mainbox #sentence {
+  height: 20vh;
+  width: 100vw;
+  padding: 0.4rem;
+  background: rgba(112, 112, 112, 0.5);
+}
+div#mainbox #sentence ul {
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+}
+div#mainbox #sentence ul li {
+  display: block;
+  margin: 0 0.6rem 0.2rem;
+}
+div#mainbox #sentence ul li span {
+  display: inline-block;
+  font-size: 1.4rem;
+}
+div#mainbox #sentence ul li span.word-span {
+  background: #eee;
+  color: #222;
+  border: 4px solid #eee;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+div#mainbox #sentence ul li span.pos-span {
+  background: #222;
+  color: #eee;
+  border: 4px solid #222;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+div#mainbox #analysis {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+div#mainbox #analysis svg {
+  display: block;
+  margin: 4rem auto;
+}
+
+/*# sourceMappingURL=index.css.map */
