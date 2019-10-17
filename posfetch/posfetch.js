@@ -96,6 +96,9 @@ function displayAnalysis (ws) {
   let pie = d3.pie()
       .value(function (d) {return d.freq;})(wfreqs);
 
+
+
+
   //console.log(pie);
 
   //let gs = gholder.selectAll("g");
@@ -108,16 +111,23 @@ function displayAnalysis (ws) {
     .attr("class", "arc")
     .merge(gpaths)
     .attr("d", arc)
-    .style("fill", function (d, i) { return piecolors(i); });
+    .style("fill", function (d, i) { return piecolors(i); })
+    .each(function(d) { this._current = d; });
 
   gp.exit().each(x => console.log(x)).remove();
   
-  // let path = d3.select("#analysis").selectAll("path").data(pie);
-  // path.attr("d", arc);
-
+  
 }
 
 
+// http://www.cagrimmett.com/til/2016/08/27/d3-transitions.html
+function arcTween(a) {
+  var i = d3.interpolate(this._current, a);
+  this._current = i(0);
+  return function(t) {
+    return arc(i(t));
+  };
+}
 
 
 
